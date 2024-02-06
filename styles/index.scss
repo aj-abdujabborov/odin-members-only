@@ -64,6 +64,17 @@ header {
       }
     }
   }
+
+  a.account {
+    background: none;
+    color: var(--colorlight);
+    text-decoration: underline;
+
+    &:hover {
+      background: none;
+      color: var(--colormedium);
+    }
+  }
 }
 
 main {
@@ -74,6 +85,10 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+h1.header {
+  margin: 0;
 }
 
 form {

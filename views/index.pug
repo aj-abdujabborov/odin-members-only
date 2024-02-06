@@ -1,0 +1,5 @@
+extends layout
+
+block content
+  if (currentUser)
+    h1.header Welcome #{currentUser.firstName}

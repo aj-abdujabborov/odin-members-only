@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => {
-  res.render("layout");
+  res.render("index");
 });
 app.use("/", AuthRouter);
 
