@@ -1,5 +1,8 @@
 :root {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  --colordark: #000505;
+  --colormedium: #bfcde0;
+  --colorlight: #fefcfd;
 }
 
 a,
@@ -16,12 +19,11 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  width: min(1000px, 100%);
 }
 
 header {
-  background: #000505;
-  color: #fefcfd;
+  background: var(--colordark);
+  color: var(--colorlight);
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -34,7 +36,7 @@ header a.title {
   font-size: 2rem;
 }
 header a.title:hover {
-  color: #bfcde0;
+  color: var(--colormedium);
 }
 header nav {
   display: flex;
@@ -49,11 +51,56 @@ header nav a {
   color: #000050;
 }
 header nav a:hover {
-  background: #bfcde0;
+  background: var(--colormedium);
 }
 
 main {
-  padding: 1rem 0.2rem;
+  width: min(1000px, 100% - 2rem);
+  padding: 2rem 0;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+form .inputs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  row-gap: 0.5rem;
+  column-gap: 3rem;
+}
+form .inputs input {
+  max-width: 400px;
+}
+form button {
+  align-self: start;
+  padding: 0.5rem 2rem;
+  border: none;
+  background: var(--colordark);
+  color: var(--colorlight);
+  border-radius: 0.2rem;
+}
+
+ul.errors {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+ul.errors li {
+  margin: 0.5rem 0;
+  padding: 0.25rem 1rem;
+  color: white;
+  background: rgb(221, 57, 57);
+  width: max-content;
 }
 
 /*# sourceMappingURL=style.css.map */

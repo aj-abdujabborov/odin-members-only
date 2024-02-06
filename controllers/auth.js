@@ -45,17 +45,32 @@ passport.deserializeUser(async (id, done) => {
 
 // --- VALIDATIONS ---
 const signupValidationArray = [
+  body("firstName", "First name is required")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("lastName", "Last name is required")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
   body(
     "username",
     "Username must be at least 4 characters. It can include alphanumeric characters as well dots, dashes and underscores"
-  ).matches(/^[a-zA-Z0-9._-]{4,}$/),
+  )
+    .matches(/^[a-zA-Z0-9._-]{4,}$/)
+    .escape(),
   body("username", "Username already exists").custom(async (value) => {
     const user = await UserModel.findOne({ username: value }).exec();
     if (user) throw new Error("Username already exists");
   }),
-  body("password", "Password must be at least 4 characters long").isLength({
-    min: 4,
-  }),
+  body("password", "Password must be at least 4 characters long")
+    .isLength({
+      min: 4,
+    })
+    .escape(),
+  body("confirmPassword", "Confirmation password should match password")
+    .escape()
+    .custom((value, { req }) => value === req.body.password),
 ];
 
 // -- CONTROLLERS --
@@ -69,7 +84,11 @@ exports.signupPOST = [
     const errors = validationResult(req);
     const data = matchedData(req);
 
-    const user = { username: data.username };
+    const user = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      username: data.username,
+    };
 
     if (!errors.isEmpty()) {
       return res.render("signup", { user, errors: errors.array() });
@@ -77,6 +96,7 @@ exports.signupPOST = [
 
     const hashedPassword = await bcrypt.hash(data.password, 16);
     user.password = hashedPassword;
+    user.membership = "member";
     const doc = new UserModel(user);
     await doc.save();
 
