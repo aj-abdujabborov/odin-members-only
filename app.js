@@ -6,8 +6,6 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const bcrypt = require("bcryptjs");
 const compression = require("compression"); // compress responses so that user downloads them faster
 const helmet = require("helmet"); // protection against security vulnerabilities
 const RateLimit = require("express-rate-limit"); // protection against repeated requests
@@ -64,39 +62,10 @@ app.use(
 );
 app.use(passport.session()); // use session to maintain login status across requests
 
-// Authentication
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    const authFailed = { message: "Username or password incorrect" };
-    try {
-      const user = await UserModel.findOne({ username }).exec();
-      if (!user || !user._id) return done(null, false, authFailed);
-
-      const match = await bcrypt.compare(password, user.password);
-      if (match !== true) return done(null, false, authFailed);
-
-      return done(null, user);
-    } catch (err) {
-      done(err);
-    }
-  })
-);
-
-// Help passport associate user's session ID with their user ID
-passport.serializeUser((user, done) => done(null, user.id));
-// When user makes a requst with session ID, find the associated user ID and acquire user
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await UserModel.findById(id).exec();
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
-
 // Make user data easily available if there is an established session
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.sessionMessages = req.session.messages || []; // saved messages if login fails
   next();
 });
 
@@ -104,14 +73,6 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.render("layout");
 });
-AuthRouter.post(
-  "/login",
-  passport.authenticate("local", {
-    // TODO: Respond with helpful message when authentication fails
-    successRedirect: "/",
-    failureRedirect: "/login",
-  })
-);
 app.use("/", AuthRouter);
 
 // Error-handling
