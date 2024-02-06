@@ -6,7 +6,15 @@ html(lang="en")
     link(rel="stylesheet" href="/stylesheets/style.css")
     title Pssst
   body
-    h1 Pssst
-    if (currentUser)
-      h2 Welcome #{currentUser.username}
-    block content
+    header
+      a.title(href="/") Pssst
+      nav
+        if (currentUser)
+          a(href="/logout") Logout
+        else 
+          a(href="/login") Login
+          a(href="/signup") Sign up
+    main
+      if (currentUser)
+        h2 Welcome #{currentUser.username}
+      block content

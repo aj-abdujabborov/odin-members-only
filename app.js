@@ -13,6 +13,8 @@ const helmet = require("helmet"); // protection against security vulnerabilities
 const RateLimit = require("express-rate-limit"); // protection against repeated requests
 // Models
 const UserModel = require("./models/user");
+// Routers
+const AuthRouter = require("./routes/auth");
 
 // Connect to MongoDB
 async function mongoConnect() {
@@ -102,37 +104,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.render("layout");
 });
-
-app.get("/signup", (req, res, next) => {
-  res.render("signup");
-});
-// TODO: validate sign up details
-app.post("/signup", (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  // TODO: check username doesn't already exist
-  // TODO: try catch
-  // TODO: Re-render sign up page upon validation issues
-
-  bcrypt.hash(password, 16, async (err, hashedPassword) => {
-    if (err) {
-      return next(err);
-    }
-    const user = new UserModel({
-      username,
-      password: hashedPassword,
-    });
-    await user.save();
-  });
-
-  res.redirect("/");
-});
-
-app.get("/login", (req, res, next) => {
-  res.render("login");
-});
-app.post(
+AuthRouter.post(
   "/login",
   passport.authenticate("local", {
     // TODO: Respond with helpful message when authentication fails
@@ -140,15 +112,7 @@ app.post(
     failureRedirect: "/login",
   })
 );
-
-app.get("/logout", (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-});
+app.use("/", AuthRouter);
 
 // Error-handling
 app.use(function (req, res, next) {
