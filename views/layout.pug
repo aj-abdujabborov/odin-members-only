@@ -6,5 +6,7 @@ html(lang="en")
     link(rel="stylesheet" href="/stylesheets/style.css")
     title Pssst
   body
-    h1 Welcome to Pssst
-    p Here you can anonymously say bad stuff, inevitably
+    h1 Pssst
+    if (currentUser)
+      h2 Welcome #{currentUser.username}
+    block content
