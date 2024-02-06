@@ -2,3 +2,67 @@
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
+
+// Resets
+a,
+button,
+input,
+textarea {
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+body {
+  background: aliceblue;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 auto;
+  width: min(1000px, 100%);
+}
+
+header {
+  background: #000505;
+  color: #fefcfd;
+
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+
+  padding: 1rem;
+  gap: 1rem;
+
+  a.title {
+    margin: 0.5rem 0;
+    text-decoration: none;
+    font-size: 2rem;
+
+    &:hover {
+      color: #bfcde0;
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    a {
+      padding: 0.5rem 1rem;
+      background: #fefcfd;
+      text-decoration: none;
+      border-radius: 0.2rem;
+      color: #000050;
+
+      &:hover {
+        background: #bfcde0;
+      }
+    }
+  }
+}
+
+main {
+  padding: 1rem 0.2rem;
+}
