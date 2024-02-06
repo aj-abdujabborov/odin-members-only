@@ -14,7 +14,35 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  membership: { type: String, required: true, enum: ["admin", "member"] },
+  membership: {
+    type: String,
+    required: true,
+    enum: ["admin", "member", "outsider"],
+  },
 });
+
+UserSchema.methods.isAdmin = function () {
+  return this.membership === "admin";
+};
+
+UserSchema.methods.isMember = function () {
+  return this.membership === "member";
+};
+
+UserSchema.methods.isOutsider = function () {
+  return this.membership === "outsider";
+};
+
+UserSchema.methods.setToAdmin = function () {
+  this.membership = "admin";
+};
+
+UserSchema.methods.setToMember = function () {
+  this.membership = "member";
+};
+
+UserSchema.methods.setToOutsider = function () {
+  this.membership = "outsider";
+};
 
 module.exports = mongoose.model("User", UserSchema);

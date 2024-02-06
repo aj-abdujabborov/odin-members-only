@@ -96,7 +96,7 @@ exports.signupPOST = [
 
     const hashedPassword = await bcrypt.hash(data.password, 16);
     user.password = hashedPassword;
-    user.membership = "member";
+    user.membership = "outsider";
     const doc = new UserModel(user);
     await doc.save();
 
@@ -114,11 +114,18 @@ exports.loginGET = (req, res, next) => {
   res.render("login");
 };
 
-exports.loginPOST = passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/login",
-  failureMessage: true,
-});
+exports.loginPOST = [
+  // (req, res, next) => {
+  //   req.body.username = "beep";
+  //   req.body.password = "beep";
+  //   next();
+  // },
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureMessage: true,
+  }),
+];
 
 exports.logoutGET = (req, res, next) => {
   req.logout((err) => {

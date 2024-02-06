@@ -1,0 +1,25 @@
+extends layout 
+
+block content 
+  h1.header Manage your account
+  h2 Your status is 
+    em= currentUser.membership
+  if (passMessage)
+    p.pass= passMessage
+  if (!currentUser.isAdmin())
+    form(method="POST")
+      if (currentUser.isOutsider())
+        h3 Membership admittance
+        div.inputs
+          label(for="memberKey") Secret membership key
+          input#memberKey(type="password", name="memberKey" autofocus)
+      else
+        h3 Upgrade to admin
+        div.inputs
+          label(for="adminKey") Secret administrator key
+          input#adminKey(type="password", name="adminKey" autofocus)
+      button(type="submit") Submit
+    ul.errors
+      if (errors)
+        each err in errors
+          li= err.msg

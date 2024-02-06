@@ -71,9 +71,17 @@ main {
   flex-direction: column;
   gap: 1rem;
 }
+main h1,
+main h2,
+main h3 {
+  margin: 0.5rem 0;
+}
 
-h1.header {
-  margin: 0;
+.pass {
+  background: rgb(70, 70, 148);
+  color: var(--colorlight);
+  padding: 0.5rem 0.5rem;
+  width: max-content;
 }
 
 form {

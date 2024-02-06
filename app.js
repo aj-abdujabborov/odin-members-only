@@ -13,6 +13,7 @@ const RateLimit = require("express-rate-limit"); // protection against repeated 
 const UserModel = require("./models/user");
 // Routers
 const AuthRouter = require("./routes/auth");
+const AccountRouter = require("./routes/account");
 
 // Connect to MongoDB
 async function mongoConnect() {
@@ -74,6 +75,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 app.use("/", AuthRouter);
+app.use("/account", AccountRouter);
 
 // Error-handling
 app.use(function (req, res, next) {
