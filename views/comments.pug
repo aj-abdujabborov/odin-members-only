@@ -3,3 +3,11 @@ extends layout
 block content
   if (currentUser)
     a(href="/comments/new") Make a new comment
+  ul
+    each comm in comments
+      li
+        h3= comm.title
+        p= comm.comment
+        span= comm.time
+        br
+        span= comm.author ? comm.author.username : "Anonymous"

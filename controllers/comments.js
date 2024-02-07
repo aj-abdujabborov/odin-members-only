@@ -1,9 +1,27 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult, matchedData } = require("express-validator");
+const { format, formatRelative } = require("date-fns");
 const CommentModel = require("../models/comment");
 
 exports.commentsGET = asyncHandler(async (req, res, next) => {
-  res.render("comments");
+  let query = CommentModel.find().sort({ time: -1 });
+  if (req.user && !req.user.isOutsider()) {
+    query.populate("author", "username");
+  } else {
+    query.projection("-author");
+  }
+  const comments = await query.exec();
+  
+  const formattedComments = comments.map((comm) => {
+    return {
+      title: comm.title,
+      comment: comm.comment,
+      time: formatRelative(comm.time, new Date()),
+      author: comm.author,
+    };
+  });
+
+  res.render("comments", { comments: formattedComments });
 });
 
 exports.newCommentGET = (req, res, next) => {
