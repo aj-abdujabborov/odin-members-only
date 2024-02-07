@@ -33,7 +33,7 @@ const app = express();
 const securityAndCompression = [
   RateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
-    max: 40,
+    max: 60,
   }), // need to design page for when limit is exceeded
   helmet.contentSecurityPolicy(),
   compression(),

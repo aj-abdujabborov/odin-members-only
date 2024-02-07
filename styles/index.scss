@@ -9,6 +9,7 @@
   --colordarkmedshadow: #0a101824;
   --colormedium: #bfcde0;
   --colorlight: #fefcfd;
+  --colorred: rgb(221, 57, 57);
 
   color: var(--colordark);
 }
@@ -24,6 +25,7 @@
   &:hover {
     background: var(--colormedium);
     color: var(--colordark);
+    cursor: pointer;
   }
 }
 
@@ -39,6 +41,13 @@
 .underline {
   text-decoration: none;
   text-decoration: underline;
+}
+
+.spacedBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
 // Resets
@@ -175,6 +184,7 @@ form {
     justify-content: space-evenly;
     gap: 1rem;
 
+    background: var(--colorlight);
     box-shadow: 0px 5px 20px var(--colordarkshadow);
     border-radius: 0.2rem;
     padding: 0.75rem 0.75rem;
@@ -189,11 +199,21 @@ form {
       font-size: 1.1rem;
     }
 
-    .spacedDetails {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
+    .details {
       font-size: 0.85rem;
+    }
+
+    button.delete {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.8rem;
+    }
+
+    .clicked {
+      background: var(--colorred);
+
+      &:hover {
+        color: var(--colorlight);
+      }
     }
   }
 }
@@ -209,8 +229,8 @@ ul.errors {
   li {
     margin: 0.5rem 0;
     padding: 0.25rem 1rem;
-    color: white;
-    background: rgb(221, 57, 57);
+    color: var(--colorlight);
+    background: var(--colorred);
     width: max-content;
   }
 }

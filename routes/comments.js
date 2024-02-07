@@ -12,4 +12,11 @@ router.use((req, res, next) => {
 router.get("/new", CommentsController.newCommentGET);
 router.post("/new", CommentsController.newCommentPOST);
 
+router.use((req, res, next) => {
+  if (!req.user.isAdmin())
+    return next(new Error("You do not have administrator privileges"));
+  next();
+});
+router.post("/delete", CommentsController.deletePOST);
+
 module.exports = router;

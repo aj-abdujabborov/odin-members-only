@@ -4,10 +4,17 @@ block content
   if (currentUser)
     a.formTypeButton(href="/comments/new") New comment
   ul.commentsContainer
+    script(src="./scripts/comments.js" defer)
+      //- defer is necessary because buttons need to load first
     each comm in comments
       li.comment
-        h2= comm.title
+        div.spacedBetween
+          h2= comm.title
+          if (currentUser && currentUser.isAdmin())
+            form(action="/comments/delete" method="POST")
+              input(type="hidden" value=comm._id name="commentId")
+              button.formTypeButton.delete(type="submit" data-clicked="false") Delete
         p= comm.comment
-        span.spacedDetails
+        span.details.spacedBetween
           span.capitalize= comm.time
           span by #[em.underline= comm.author ? comm.author.username : "Anonymous"]

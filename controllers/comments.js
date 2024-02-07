@@ -13,14 +13,13 @@ exports.commentsGET = asyncHandler(async (req, res, next) => {
   const comments = await query.exec();
 
   const formattedComments = comments.map((comm) => {
-    const obj = {
+    return {
+      _id: comm._id,
       title: comm.title,
       comment: comm.comment,
       time: formatRelative(comm.time, new Date()),
       author: comm.author,
     };
-    obj.time[0] = obj.time[0].toUpperCase();
-    return obj;
   });
 
   res.render("comments", { comments: formattedComments });
@@ -49,6 +48,15 @@ exports.newCommentPOST = [
     const doc = new CommentModel(comment);
     await doc.save();
 
+    res.redirect("/");
+  }),
+];
+
+exports.deletePOST = [
+  body("commentId").escape(),
+  asyncHandler(async (req, res, next) => {
+    const data = matchedData(req);
+    await CommentModel.findByIdAndDelete(data.commentId).exec();
     res.redirect("/");
   }),
 ];
