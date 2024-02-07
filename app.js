@@ -14,6 +14,7 @@ const UserModel = require("./models/user");
 // Routers
 const AuthRouter = require("./routes/auth");
 const AccountRouter = require("./routes/account");
+const CommentsRouter = require("./routes/comments");
 
 // Connect to MongoDB
 async function mongoConnect() {
@@ -72,10 +73,11 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect("/comments");
 });
 app.use("/", AuthRouter);
 app.use("/account", AccountRouter);
+app.use("/comments", CommentsRouter);
 
 // Error-handling
 app.use(function (req, res, next) {

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1.heading New comment
+  form(method="post")
+    div.inputs
+      label(for="title") Title
+      input#title(type="text", name="title", value=comment ? comment.title : "", autofocus=!(comment&&comment.title))
+      label(for="comment") Comment
+      textarea#comment(type="text", name="comment", autofocus=!(comment&&comment.comment))= comment ? comment.comment : ""
+    button(type="submit") Submit
+  ul.errors
+    if (errors)
+      each err in errors
+        li= err.msg
