@@ -1,13 +1,13 @@
 extends layout
 
 block content
-  h1.heading New comment
+  h1.heading Write a comment
   form(method="post")
     div.inputs
       label(for="title") Title
       input#title(type="text", name="title", value=comment ? comment.title : "", autofocus=!(comment&&comment.title))
       label(for="comment") Comment
-      textarea#comment(type="text", name="comment", autofocus=!(comment&&comment.comment))= comment ? comment.comment : ""
+      textarea#comment(type="text", name="comment", rows=4, autofocus=!(comment&&comment.comment))= comment ? comment.comment : ""
     button(type="submit") Submit
   ul.errors
     if (errors)

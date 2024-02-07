@@ -11,14 +11,16 @@ exports.commentsGET = asyncHandler(async (req, res, next) => {
     query.projection("-author");
   }
   const comments = await query.exec();
-  
+
   const formattedComments = comments.map((comm) => {
-    return {
+    const obj = {
       title: comm.title,
       comment: comm.comment,
       time: formatRelative(comm.time, new Date()),
       author: comm.author,
     };
+    obj.time[0] = obj.time[0].toUpperCase();
+    return obj;
   });
 
   res.render("comments", { comments: formattedComments });

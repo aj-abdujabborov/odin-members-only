@@ -1,10 +1,44 @@
 :root {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 16px;
 
   --colordark: #000505;
+  --colordarkmed: #25466c;
+  --colordarkshadow: #0005052b;
+  --colordarkmedshadow: #0a101824;
   --colormedium: #bfcde0;
   --colorlight: #fefcfd;
+
+  color: var(--colordark);
+}
+
+@mixin formTypeButton {
+  align-self: start;
+  padding: 0.5rem 2rem;
+  border: none;
+  background: var(--colordark);
+  color: var(--colorlight);
+  border-radius: 0.2rem;
+
+  &:hover {
+    background: var(--colormedium);
+    color: var(--colordark);
+  }
+}
+
+.bold {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.underline {
+  text-decoration: none;
+  text-decoration: underline;
 }
 
 // Resets
@@ -93,13 +127,6 @@ main {
   }
 }
 
-.pass {
-  background: rgb(70, 70, 148);
-  color: var(--colorlight);
-  padding: 0.5rem 0.5rem;
-  width: max-content;
-}
-
 form {
   display: flex;
   flex-direction: column;
@@ -112,18 +139,62 @@ form {
     row-gap: 0.5rem;
     column-gap: 3rem;
 
-    input {
+    input,
+    textarea {
       max-width: 400px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 4ch;
     }
   }
 
   button {
-    align-self: start;
-    padding: 0.5rem 2rem;
-    border: none;
-    background: var(--colordark);
-    color: var(--colorlight);
+    @include formTypeButton;
+  }
+}
+
+.formTypeButton {
+  @include formTypeButton;
+  text-decoration: none;
+}
+
+.commentsContainer {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .comment {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1rem;
+
+    box-shadow: 0px 5px 20px var(--colordarkshadow);
     border-radius: 0.2rem;
+    padding: 0.75rem 0.75rem;
+
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+    }
+
+    .spacedDetails {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
   }
 }
 
@@ -142,4 +213,11 @@ ul.errors {
     background: rgb(221, 57, 57);
     width: max-content;
   }
+}
+
+.pass {
+  background: rgb(70, 70, 148);
+  color: var(--colorlight);
+  padding: 0.5rem 0.5rem;
+  width: max-content;
 }

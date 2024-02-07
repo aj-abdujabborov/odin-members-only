@@ -2,12 +2,12 @@ extends layout
 
 block content
   if (currentUser)
-    a(href="/comments/new") Make a new comment
-  ul
+    a.formTypeButton(href="/comments/new") New comment
+  ul.commentsContainer
     each comm in comments
-      li
-        h3= comm.title
+      li.comment
+        h2= comm.title
         p= comm.comment
-        span= comm.time
-        br
-        span= comm.author ? comm.author.username : "Anonymous"
+        span.spacedDetails
+          span.capitalize= comm.time
+          span by #[em.underline= comm.author ? comm.author.username : "Anonymous"]
