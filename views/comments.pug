@@ -17,4 +17,9 @@ block content
         p= comm.comment
         span.details.spacedBetween
           span.capitalize= comm.time
-          span by #[em.underline= comm.author ? comm.author.username : "Anonymous"]
+          span by 
+            if (comm.author)
+              span.bold #{comm.author.firstName} #{comm.author.lastName} 
+              em.underline @#{comm.author.username}
+            else 
+              em.underline Anonymous

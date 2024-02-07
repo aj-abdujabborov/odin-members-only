@@ -6,7 +6,7 @@ const CommentModel = require("../models/comment");
 exports.commentsGET = asyncHandler(async (req, res, next) => {
   let query = CommentModel.find().sort({ time: -1 });
   if (req.user && !req.user.isOutsider()) {
-    query.populate("author", "username");
+    query.populate("author", "username firstName lastName");
   } else {
     query.projection("-author");
   }
