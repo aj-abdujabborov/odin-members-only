@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www.js",
     "devserver": "node --watch --env-file=.env ./bin/www.js",
     "devstart": "node --watch --env-file=.env ./bin/www.js & npm run sass",
     "sass": "sass --watch styles/index.scss public/stylesheets/style.css"

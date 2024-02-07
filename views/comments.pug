@@ -14,7 +14,7 @@ block content
             form(action="/comments/delete" method="POST")
               input(type="hidden" value=comm._id name="commentId")
               button.formTypeButton.delete(type="submit" data-clicked="false") Delete
-        p= comm.comment
+        p !{comm.comment}
         span.details.spacedBetween
           span.capitalize= comm.time
           span by 
